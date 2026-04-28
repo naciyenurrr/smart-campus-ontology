@@ -5,29 +5,116 @@
 
 <http://www.example.org/smartcampus> a owl:Ontology .
 
-### Classes ###
+############################
+### CLASSES
+############################
+
 :Student a owl:Class .
+:Professor a owl:Class .
 :Course a owl:Class .
+:Department a owl:Class .
 :Building a owl:Class .
 :Laboratory a owl:Class ;
     rdfs:subClassOf :Building .
+:Classroom a owl:Class ;
+    rdfs:subClassOf :Building .
 
-### Object Properties ###
+############################
+### OBJECT PROPERTIES
+############################
+
 :takesCourse a owl:ObjectProperty ;
     rdfs:domain :Student ;
     rdfs:range :Course .
+
+:teachesCourse a owl:ObjectProperty ;
+    rdfs:domain :Professor ;
+    rdfs:range :Course .
+
+:belongsToDepartment a owl:ObjectProperty ;
+    rdfs:domain :Student ;
+    rdfs:range :Department .
+
+:worksInDepartment a owl:ObjectProperty ;
+    rdfs:domain :Professor ;
+    rdfs:range :Department .
 
 :locatedIn a owl:ObjectProperty ;
     rdfs:domain :Laboratory ;
     rdfs:range :Building .
 
-### Instances ###
+:hasClassroom a owl:ObjectProperty ;
+    rdfs:domain :Building ;
+    rdfs:range :Classroom .
+
+############################
+### DATA PROPERTIES
+############################
+
+:studentID a owl:DatatypeProperty ;
+    rdfs:domain :Student ;
+    rdfs:range xsd:string .
+
+:studentName a owl:DatatypeProperty ;
+    rdfs:domain :Student ;
+    rdfs:range xsd:string .
+
+:courseCode a owl:DatatypeProperty ;
+    rdfs:domain :Course ;
+    rdfs:range xsd:string .
+
+:courseName a owl:DatatypeProperty ;
+    rdfs:domain :Course ;
+    rdfs:range xsd:string .
+
+:credits a owl:DatatypeProperty ;
+    rdfs:domain :Course ;
+    rdfs:range xsd:int .
+
+:buildingName a owl:DatatypeProperty ;
+    rdfs:domain :Building ;
+    rdfs:range xsd:string .
+
+############################
+### INSTANCES
+############################
+
+### Students
 :Berat a :Student ;
-    :takesCourse :DeepLearning_101 .
+    :studentID "S001" ;
+    :studentName "Berat Yılmaz" ;
+    :takesCourse :DeepLearning_101 ;
+    :belongsToDepartment :AI_Department .
 
-:DeepLearning_101 a :Course .
+:Naciye a :Student ;
+    :studentID "S002" ;
+    :studentName "Naciye Nur Akkuş" ;
+    :takesCourse :DeepLearning_101 ;
+    :belongsToDepartment :AI_Department .
 
-:EngineeringFaculty a :Building .
+### Course
+:DeepLearning_101 a :Course ;
+    :courseCode "DL101" ;
+    :courseName "Introduction to Deep Learning" ;
+    :credits 6 .
 
+### Professor
+:Prof_Ahmet a :Professor ;
+    :teachesCourse :DeepLearning_101 ;
+    :worksInDepartment :AI_Department .
+
+### Department
+:AI_Department a :Department .
+
+### Buildings
+:EngineeringFaculty a :Building ;
+    :buildingName "Engineering Faculty" .
+
+### Laboratory
 :OntologyLab a :Laboratory ;
     :locatedIn :EngineeringFaculty .
+
+### Classroom
+:Classroom101 a :Classroom .
+
+:EngineeringFaculty :hasClassroom :Classroom101 .
