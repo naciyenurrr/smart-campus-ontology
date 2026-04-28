@@ -1,151 +1,153 @@
-@prefix : <http://www.example.org/smartcampus#> .
+@prefix : <http://www.example.org/jobontology#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<http://www.example.org/smartcampus> a owl:Ontology .
+<http://www.example.org/jobontology> a owl:Ontology .
 
 ############################
-### CLASS HIERARCHY
+### CLASSES
 ############################
 
 :Person a owl:Class .
 
-:Student a owl:Class ;
+:Candidate a owl:Class ;
     rdfs:subClassOf :Person .
 
-:Professor a owl:Class ;
+:Recruiter a owl:Class ;
     rdfs:subClassOf :Person .
 
-:Course a owl:Class .
+:Job a owl:Class .
 
-:Department a owl:Class .
+:Company a owl:Class .
 
-:Building a owl:Class .
+:Skill a owl:Class .
 
-:Facility a owl:Class ;
-    rdfs:subClassOf :Building .
+:TechnicalSkill a owl:Class ;
+    rdfs:subClassOf :Skill .
 
-:Laboratory a owl:Class ;
-    rdfs:subClassOf :Facility .
+:SoftSkill a owl:Class ;
+    rdfs:subClassOf :Skill .
 
-:Classroom a owl:Class ;
-    rdfs:subClassOf :Facility .
+:ExperienceLevel a owl:Class .
+
+:Education a owl:Class .
+
+:Certification a owl:Class .
+
+:Location a owl:Class .
 
 ############################
 ### OBJECT PROPERTIES
 ############################
 
-:takesCourse a owl:ObjectProperty ;
-    rdfs:domain :Student ;
-    rdfs:range :Course ;
-    owl:inverseOf :isTakenBy .
+:hasSkill a owl:ObjectProperty ;
+    rdfs:domain :Candidate ;
+    rdfs:range :Skill .
 
-:isTakenBy a owl:ObjectProperty ;
-    rdfs:domain :Course ;
-    rdfs:range :Student .
+:requiresSkill a owl:ObjectProperty ;
+    rdfs:domain :Job ;
+    rdfs:range :Skill .
 
-:teachesCourse a owl:ObjectProperty ;
-    rdfs:domain :Professor ;
-    rdfs:range :Course ;
-    owl:inverseOf :isTaughtBy .
+:hasCertification a owl:ObjectProperty ;
+    rdfs:domain :Candidate ;
+    rdfs:range :Certification .
 
-:isTaughtBy a owl:ObjectProperty ;
-    rdfs:domain :Course ;
-    rdfs:range :Professor .
+:requiresCertification a owl:ObjectProperty ;
+    rdfs:domain :Job ;
+    rdfs:range :Certification .
 
-:belongsToDepartment a owl:ObjectProperty ;
-    rdfs:domain :Person ;
-    rdfs:range :Department .
+:hasEducation a owl:ObjectProperty ;
+    rdfs:domain :Candidate ;
+    rdfs:range :Education .
 
-:hasMember a owl:ObjectProperty ;
-    rdfs:domain :Department ;
-    rdfs:range :Person ;
-    owl:inverseOf :belongsToDepartment .
+:offeredBy a owl:ObjectProperty ;
+    rdfs:domain :Job ;
+    rdfs:range :Company .
 
 :locatedIn a owl:ObjectProperty ;
-    rdfs:domain :Facility ;
-    rdfs:range :Building .
+    rdfs:domain :Job ;
+    rdfs:range :Location .
 
-:hasFacility a owl:ObjectProperty ;
-    rdfs:domain :Building ;
-    rdfs:range :Facility ;
-    owl:inverseOf :locatedIn .
+:preferredLocation a owl:ObjectProperty ;
+    rdfs:domain :Candidate ;
+    rdfs:range :Location .
 
 ############################
 ### DATA PROPERTIES
 ############################
 
-:studentID a owl:DatatypeProperty ;
-    rdfs:domain :Student ;
-    rdfs:range xsd:string .
-
 :name a owl:DatatypeProperty ;
     rdfs:domain :Person ;
     rdfs:range xsd:string .
 
-:courseCode a owl:DatatypeProperty ;
-    rdfs:domain :Course ;
+:jobTitle a owl:DatatypeProperty ;
+    rdfs:domain :Job ;
     rdfs:range xsd:string .
 
-:credits a owl:DatatypeProperty ;
-    rdfs:domain :Course ;
+:salary a owl:DatatypeProperty ;
+    rdfs:domain :Job ;
     rdfs:range xsd:int .
 
-:capacity a owl:DatatypeProperty ;
-    rdfs:domain :Classroom ;
+:yearsOfExperience a owl:DatatypeProperty ;
+    rdfs:domain :Candidate ;
     rdfs:range xsd:int .
 
+:skillLevel a owl:DatatypeProperty ;
+    rdfs:domain :Candidate ;
+    rdfs:range xsd:string .
+
+:jobType a owl:DatatypeProperty ;
+    rdfs:domain :Job ;
+    rdfs:range xsd:string .  # Full-time, Remote, Hybrid
+
 ############################
-### RESTRICTIONS (ADVANCED)
+### SKILL HIERARCHY
 ############################
 
-:Student rdfs:subClassOf [
-    a owl:Restriction ;
-    owl:onProperty :takesCourse ;
-    owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-    owl:onClass :Course
-] .
+:Programming a :TechnicalSkill .
+:Python a :TechnicalSkill ;
+    rdfs:subClassOf :Programming .
 
-:Course rdfs:subClassOf [
-    a owl:Restriction ;
-    owl:onProperty :isTaughtBy ;
-    owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-    owl:onClass :Professor
-] .
+:MachineLearning a :TechnicalSkill .
+
+:Communication a :SoftSkill .
 
 ############################
 ### INSTANCES
 ############################
 
-:AI_Department a :Department .
+### Locations
+:Istanbul a :Location .
+:Remote a :Location .
 
-:Berat a :Student ;
-    :name "Berat Yılmaz" ;
-    :studentID "S001" ;
-    :takesCourse :DeepLearning_101 ;
-    :belongsToDepartment :AI_Department .
+### Company
+:TechCorp a :Company .
 
-:Naciye a :Student ;
+### Job
+:AI_Engineer_Job a :Job ;
+    :jobTitle "AI Engineer" ;
+    :requiresSkill :Python , :MachineLearning ;
+    :requiresCertification :ML_Certificate ;
+    :salary 50000 ;
+    :jobType "Remote" ;
+    :locatedIn :Remote ;
+    :offeredBy :TechCorp .
+
+### Certification
+:ML_Certificate a :Certification .
+
+### Candidate
+:Naciye a :Candidate ;
     :name "Naciye Nur Akkuş" ;
-    :studentID "S002" ;
-    :takesCourse :DeepLearning_101 ;
-    :belongsToDepartment :AI_Department .
+    :hasSkill :Python ;
+    :skillLevel "Intermediate" ;
+    :yearsOfExperience 2 ;
+    :preferredLocation :Remote .
 
-:DeepLearning_101 a :Course ;
-    :courseCode "DL101" ;
-    :credits 6 ;
-    :isTaughtBy :Prof_Ahmet .
-
-:Prof_Ahmet a :Professor ;
-    :name "Ahmet Demir" ;
-    :belongsToDepartment :AI_Department .
-
-:EngineeringBuilding a :Building .
-
-:OntologyLab a :Laboratory ;
-    :locatedIn :EngineeringBuilding .
-
-:Room101 a :Classroom ;
-    :capacity 40 ;
-    :locatedIn :EngineeringBuilding .
+:Berat a :Candidate ;
+    :name "Berat Yılmaz" ;
+    :hasSkill :Python , :MachineLearning ;
+    :hasCertification :ML_Certificate ;
+    :yearsOfExperience 4 ;
+    :preferredLocation :Istanbul .
