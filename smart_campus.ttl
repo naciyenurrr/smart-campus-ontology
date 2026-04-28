@@ -6,18 +6,31 @@
 <http://www.example.org/smartcampus> a owl:Ontology .
 
 ############################
-### CLASSES
+### CLASS HIERARCHY
 ############################
 
-:Student a owl:Class .
-:Professor a owl:Class .
+:Person a owl:Class .
+
+:Student a owl:Class ;
+    rdfs:subClassOf :Person .
+
+:Professor a owl:Class ;
+    rdfs:subClassOf :Person .
+
 :Course a owl:Class .
+
 :Department a owl:Class .
+
 :Building a owl:Class .
+
+:Facility a owl:Class ;
+    rdfs:subClassOf :Building .
+
 :Laboratory a owl:Class ;
-    rdfs:subClassOf :Building .
+    rdfs:subClassOf :Facility .
+
 :Classroom a owl:Class ;
-    rdfs:subClassOf :Building .
+    rdfs:subClassOf :Facility .
 
 ############################
 ### OBJECT PROPERTIES
@@ -25,27 +38,39 @@
 
 :takesCourse a owl:ObjectProperty ;
     rdfs:domain :Student ;
-    rdfs:range :Course .
+    rdfs:range :Course ;
+    owl:inverseOf :isTakenBy .
+
+:isTakenBy a owl:ObjectProperty ;
+    rdfs:domain :Course ;
+    rdfs:range :Student .
 
 :teachesCourse a owl:ObjectProperty ;
     rdfs:domain :Professor ;
-    rdfs:range :Course .
+    rdfs:range :Course ;
+    owl:inverseOf :isTaughtBy .
+
+:isTaughtBy a owl:ObjectProperty ;
+    rdfs:domain :Course ;
+    rdfs:range :Professor .
 
 :belongsToDepartment a owl:ObjectProperty ;
-    rdfs:domain :Student ;
+    rdfs:domain :Person ;
     rdfs:range :Department .
 
-:worksInDepartment a owl:ObjectProperty ;
-    rdfs:domain :Professor ;
-    rdfs:range :Department .
+:hasMember a owl:ObjectProperty ;
+    rdfs:domain :Department ;
+    rdfs:range :Person ;
+    owl:inverseOf :belongsToDepartment .
 
 :locatedIn a owl:ObjectProperty ;
-    rdfs:domain :Laboratory ;
+    rdfs:domain :Facility ;
     rdfs:range :Building .
 
-:hasClassroom a owl:ObjectProperty ;
+:hasFacility a owl:ObjectProperty ;
     rdfs:domain :Building ;
-    rdfs:range :Classroom .
+    rdfs:range :Facility ;
+    owl:inverseOf :locatedIn .
 
 ############################
 ### DATA PROPERTIES
@@ -55,15 +80,11 @@
     rdfs:domain :Student ;
     rdfs:range xsd:string .
 
-:studentName a owl:DatatypeProperty ;
-    rdfs:domain :Student ;
+:name a owl:DatatypeProperty ;
+    rdfs:domain :Person ;
     rdfs:range xsd:string .
 
 :courseCode a owl:DatatypeProperty ;
-    rdfs:domain :Course ;
-    rdfs:range xsd:string .
-
-:courseName a owl:DatatypeProperty ;
     rdfs:domain :Course ;
     rdfs:range xsd:string .
 
@@ -71,50 +92,60 @@
     rdfs:domain :Course ;
     rdfs:range xsd:int .
 
-:buildingName a owl:DatatypeProperty ;
-    rdfs:domain :Building ;
-    rdfs:range xsd:string .
+:capacity a owl:DatatypeProperty ;
+    rdfs:domain :Classroom ;
+    rdfs:range xsd:int .
+
+############################
+### RESTRICTIONS (ADVANCED)
+############################
+
+:Student rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty :takesCourse ;
+    owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+    owl:onClass :Course
+] .
+
+:Course rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty :isTaughtBy ;
+    owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+    owl:onClass :Professor
+] .
 
 ############################
 ### INSTANCES
 ############################
 
-### Students
+:AI_Department a :Department .
+
 :Berat a :Student ;
+    :name "Berat Yılmaz" ;
     :studentID "S001" ;
-    :studentName "Berat Yılmaz" ;
     :takesCourse :DeepLearning_101 ;
     :belongsToDepartment :AI_Department .
 
 :Naciye a :Student ;
+    :name "Naciye Nur Akkuş" ;
     :studentID "S002" ;
-    :studentName "Naciye Nur Akkuş" ;
     :takesCourse :DeepLearning_101 ;
     :belongsToDepartment :AI_Department .
 
-### Course
 :DeepLearning_101 a :Course ;
     :courseCode "DL101" ;
-    :courseName "Introduction to Deep Learning" ;
-    :credits 6 .
+    :credits 6 ;
+    :isTaughtBy :Prof_Ahmet .
 
-### Professor
 :Prof_Ahmet a :Professor ;
-    :teachesCourse :DeepLearning_101 ;
-    :worksInDepartment :AI_Department .
+    :name "Ahmet Demir" ;
+    :belongsToDepartment :AI_Department .
 
-### Department
-:AI_Department a :Department .
+:EngineeringBuilding a :Building .
 
-### Buildings
-:EngineeringFaculty a :Building ;
-    :buildingName "Engineering Faculty" .
-
-### Laboratory
 :OntologyLab a :Laboratory ;
-    :locatedIn :EngineeringFaculty .
+    :locatedIn :EngineeringBuilding .
 
-### Classroom
-:Classroom101 a :Classroom .
-
-:EngineeringFaculty :hasClassroom :Classroom101 .
+:Room101 a :Classroom ;
+    :capacity 40 ;
+    :locatedIn :EngineeringBuilding .
