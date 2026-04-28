@@ -1,64 +1,46 @@
-# Smart Campus Ontology
+# Job & Career Recommendation Ontology
 
-## 📌 Project Description
-This project presents a Smart Campus Ontology developed for the Knowledge Engineering and Ontologies course. The ontology models the core academic and physical structures of a university campus.
+## 📌 Overview
+This ontology models a job recommendation system that matches candidates with job opportunities based on skills and experience levels.
 
 ## 🎯 Objectives
-- Represent students, courses, and academic staff
-- Model relationships between campus entities
-- Provide a semantic structure for future smart campus systems
+- Represent candidates, jobs, and companies
+- Model skill-based matching
+- Enable intelligent job recommendations
 
-## 🧠 Domain
-Educational Institution / Smart Campus
-
-## 📦 Scope
-The ontology covers:
-- Students and course enrollments
-- Professors and teaching assignments
-- Departments and affiliations
-- Buildings and classrooms
-- Laboratories and their locations
-
-## 🧩 Key Concepts
+## 🧠 Core Concepts
 
 ### Classes
-- Student
-- Professor
-- Course
-- Department
-- Building
-- Laboratory
-- Classroom
+- Candidate
+- Job
+- Company
+- Skill
+- ExperienceLevel
 
-### Object Properties
-- takesCourse
-- teachesCourse
-- belongsToDepartment
-- worksInDepartment
-- locatedIn
-- hasClassroom
+### Relationships
+- hasSkill
+- requiresSkill
+- appliesTo
+- recommendedFor
+- offeredBy
 
-### Data Properties
-- studentID
-- studentName
-- courseCode
-- courseName
-- credits
-- buildingName
+## 🔍 Use Cases
+- Match candidates to jobs based on skills
+- Recommend jobs automatically
+- Analyze skill gaps
+- Support recruitment decision systems
 
-## 🔗 Example Use Cases
-- Track student enrollments
-- Identify which professor teaches a course
-- Find which department a student belongs to
-- Locate laboratories within campus buildings
-- Manage classroom allocations
+## 🚀 Advanced Features
+- Inverse properties
+- Semantic relationships
+- Extendable for AI-based systems
 
-## 🚀 Future Work
-- Add scheduling (timetables)
-- Integrate IoT devices (smart campus features)
-- Extend ontology with security and access control
-- Add more detailed academic hierarchy
+## 🔮 Future Work
+- Add skill proficiency levels
+- Include certifications
+- Integrate real job market data
+- Add machine learning recommendation layer
 
 ## 👥 Contributors
-- Berat
 - Naciye Nur Akkuş
+- Berat
