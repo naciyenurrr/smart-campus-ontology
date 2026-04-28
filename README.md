@@ -1,18 +1,64 @@
-# smart-campus-ontology
 # Smart Campus Ontology
 
-## Project Description
-This repository contains the initial phase of the "Smart Campus" ontology, developed for the Knowledge Engineering and Ontologies course. The ontology aims to model the core components of a university campus, including students, courses, buildings, and the relationships between them.
+## 📌 Project Description
+This project presents a Smart Campus Ontology developed for the Knowledge Engineering and Ontologies course. The ontology models the core academic and physical structures of a university campus.
 
-## Scope and Objectives
-* **Domain:** Smart Campus / Educational Institution
-* **Scope:** Modeling buildings, educational areas, and student-course enrollments.
-* **Objective:** To provide a foundational knowledge representation for campus resource tracking.
+## 🎯 Objectives
+- Represent students, courses, and academic staff
+- Model relationships between campus entities
+- Provide a semantic structure for future smart campus systems
 
-## Key Concepts and Relationships
-* **Classes:** Student, Course, Building, Laboratory
-* **Object Properties:** takesCourse (Domain: Student, Range: Course), locatedIn (Domain: Laboratory, Range: Building)
+## 🧠 Domain
+Educational Institution / Smart Campus
 
-## Initial Instances
-* **Students:** Berat, Naciye
-* **Courses:** DeepLearning_101
+## 📦 Scope
+The ontology covers:
+- Students and course enrollments
+- Professors and teaching assignments
+- Departments and affiliations
+- Buildings and classrooms
+- Laboratories and their locations
+
+## 🧩 Key Concepts
+
+### Classes
+- Student
+- Professor
+- Course
+- Department
+- Building
+- Laboratory
+- Classroom
+
+### Object Properties
+- takesCourse
+- teachesCourse
+- belongsToDepartment
+- worksInDepartment
+- locatedIn
+- hasClassroom
+
+### Data Properties
+- studentID
+- studentName
+- courseCode
+- courseName
+- credits
+- buildingName
+
+## 🔗 Example Use Cases
+- Track student enrollments
+- Identify which professor teaches a course
+- Find which department a student belongs to
+- Locate laboratories within campus buildings
+- Manage classroom allocations
+
+## 🚀 Future Work
+- Add scheduling (timetables)
+- Integrate IoT devices (smart campus features)
+- Extend ontology with security and access control
+- Add more detailed academic hierarchy
+
+## 👥 Contributors
+- Berat
+- Naciye Nur Akkuş
