@@ -1,0 +1,33 @@
+@prefix : <http://www.example.org/smartcampus#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<http://www.example.org/smartcampus> a owl:Ontology .
+
+### Classes ###
+:Student a owl:Class .
+:Course a owl:Class .
+:Building a owl:Class .
+:Laboratory a owl:Class ;
+    rdfs:subClassOf :Building .
+
+### Object Properties ###
+:takesCourse a owl:ObjectProperty ;
+    rdfs:domain :Student ;
+    rdfs:range :Course .
+
+:locatedIn a owl:ObjectProperty ;
+    rdfs:domain :Laboratory ;
+    rdfs:range :Building .
+
+### Instances ###
+:Berat a :Student ;
+    :takesCourse :DeepLearning_101 .
+
+:DeepLearning_101 a :Course .
+
+:EngineeringFaculty a :Building .
+
+:OntologyLab a :Laboratory ;
+    :locatedIn :EngineeringFaculty .
